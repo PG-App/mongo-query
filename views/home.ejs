@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Potta+One&family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/home.css">
+    <title>Find best PGs online</title>
+</head>
+
+<body>
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+        <p id="logo">NEST</p>
+        <ul>
+            <li><button class="btnDropdown">Select City <sup id="down_arrow_head">&#8964</sup></button></li>
+            <li><a href="#" id="login_link">Login</a></li>
+            <li><a href="#" id="signup_link">Sign Up</a></li>
+        </ul>
+    </div>
+
+
+    <!-- INTRO SECTION -->
+
+    <section class="introSection">
+        <div class="introSectionTop">
+            <div class="linesAndSearch">
+                <p id="intro_line">End your PG finding problems with NEST</p>
+                <p id="intro_line_next">Type in a location and find best PGs for you</p>
+                <div class="introSearch">
+
+                    <form class="introSearch" method="POST" action="/api/search/hostels">
+
+                        <input name="cityName" list="cityList" type="text" id="input_location" placeholder="Search by city, locality...">\
+                        <datalist id="cityList">
+                        <option value="Guwahati"></option>
+                        <option value="Dibrugarh"></option>
+                    </datalist>
+                        <button id="btn_search">Search</button>
+
+                    </form>
+
+                </div>
+            </div>
+            <img src="Home SVG/Group R 1.svg" id="intro_right_svg">
+        </div>
+        <img src="Home SVG/wave B.svg" id="intro_bottom_svg">
+    </section>
+
+
+</body>
+
+</html>

@@ -1,0 +1,14 @@
+ 
+# POST  http://localhost:3000/api/update/hostels/6012d4f6cb2e1553983209ce
+# Content-Type: application/json
+
+# {
+#     "cityName": "Barpeta",
+#     "feature_image": "https://firebasestorage.googleapis.com/v0/b/fb-express-d6a56.appspot.com/o/images%2Fme.jpg?alt=media&token=2337c3ea-6a1f-4564-8799-bb94f284657a"
+# }
+
+GET https://andruxnet-world-cities-v1.p.rapidapi.com?query=paris&searchby=city
+
+x-rapidapi-key:327a845cd1msh24c472eb2d4eaccp1cafacjsn48fb1d7fa305
+x-rapidapi-host:andruxnet-world-cities-v1.p.rapidapi.com
+useQueryString: true

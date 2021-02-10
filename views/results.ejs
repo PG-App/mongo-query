@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Potta+One&family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/result.css">
+    <title>Results Page</title>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+        <p id="logo">NEST</p>
+        <ul>
+            <li><a href="#" id="login_link">Login</a></li>
+            <li><a href="#" id="signup_link">Sign Up</a></li>
+        </ul>
+    </div>
+
+
+
+
+
+    <!-- SHOW AND SEARCH -->
+
+    <div class="showAndSearch">
+        <div class="showingLine">You are searching in Ganeshguri, Guwahati</div>>
+        <div class="searchLocation">
+            <input type="text" list="cityList" class="inputLocation" placeholder="Search another city, locality...">
+            <datalist id="cityList">
+                <option value="Guwahati"></option>
+                <option value="Dibrugarh"></option>
+            </datalist>
+            <button class="btnSearch">Search</button>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- BODY CONTAINER -->
+
+    <div class="bodyContainer">
+
+        <div class="filterContainer">
+            <div class="filterContainerHeader">Filters</div>
+            <hr>
+
+            <form class="filterForm">
+
+                <!-- PG GENDER -->
+
+                <div class="filterCategory">
+                    <div class="filterCategoryHeader">Gender</div>
+                    <div class="filterCategoryChoice">
+
+                        <div class="toggleSwitch">
+                            <input type="checkbox" id="toggle_switch_type_boys" name="type" value="Boys">
+                            <label for="toggle_switch_type_boys"><p class="toggleText">Boys' PG</p></label>
+                        </div>
+
+                        <div class="toggleSwitch">
+                            <input type="checkbox" id="toggle_switch_type_girls" name="type" value="Girls">
+                            <label for="toggle_switch_type_girls"><p class="toggleText">Girls' PG</p></label>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- PG BED -->
+
+                <div class="filterCategory">
+                    <div class="filterCategoryHeader">Occupancy</div>
+                    <div class="filterCategoryChoice">
+
+                        <div class="toggleSwitch">
+                            <input type="checkbox" id="toggle_switch_single_bed" name="bed" value="Single">
+                            <label for="toggle_switch_single_bed"><p class="toggleText">Single Bed</p></label>
+                        </div>
+
+                        <div class="toggleSwitch">
+                            <input type="checkbox" id="toggle_switch_double_bed" name="bed" value="Double">
+                            <label for="toggle_switch_double_bed"><p class="toggleText">Double Bed</p></label>
+                        </div>
+
+                        <div class="toggleSwitch">
+                            <input type="checkbox" id="toggle_switch_triple_bed" name="bed" value="Triple">
+                            <label for="toggle_switch_triple_bed"><p class="toggleText">Triple Bed</p></label>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- AC / NON-AC -->
+
+                <div class="filterCategory">
+                    <div class="filterCategoryHeader">AC Type</div>
+                    <div class="filterCategoryChoice">
+
+                        <div class="toggleSwitch">
+                            <input type="checkbox" id="toggle_switch_ac" name="ac" value="AC">
+                            <label for="toggle_switch_ac"><p class="toggleText">AC</p></label>
+                        </div>
+
+                        <div class="toggleSwitch">
+                            <input type="checkbox" id="toggle_switch_non_ac" name="ac" value="Non-AC">
+                            <label for="toggle_switch_non_ac"><p class="toggleText">Non - AC</p></label>
+                        </div>
+
+                    </div>
+                </div>
+
+                <button type="submit" id="btn_apply_filters">Apply Filters</button>
+            </form>
+        </div>
+
+
+
+
+
+
+        <!-- PG CONTAINER -->
+
+        <div class="pgContainer">
+
+            <% hostels.forEach(hostel => {  %>
+
+                <div class="pgFlex">
+                    <div class="pgCard">
+                        <% hostel.hostel.forEach(hos => { %>
+                            <img src="pg-rooms-500x500 (1).jpg" id="card_pg_image">
+                            <img src="<%= hos.feature_image %>" id="card_pg_image">
+                            <div class="cardPgDetails">
+                                <!-- <p id="card_pg_name">Heujiya Kutir PG Group</p> -->
+                                <p id="card_pg_name">
+                                    <%= hos.hostelName %>
+                                </p>
+                                <!-- <p id="card_pg_address">Bylane No. 2, Rajgarh Road, Ganeshguri, Guwahati</p> -->
+                                <p id="card_pg_address">
+                                    Bylane No. 2,
+                                    <%#= hos.street %>
+                                        Rajgarh Road, Ganeshguri,
+                                        <%= hos.locality %>
+                                            <%= hostel.cityName %>, PIN-
+                                                <%= hos.pincode %>
+                                </p>
+                                <!-- <p id="card_pg_gender">Boys' PG</p> -->
+                                <p id="card_pg_gender">
+                                    <%= hos.type %>' PG</p>
+                                <div class="cardBtnGroup">
+                                    <button class="cardBtnClass" id="card_btn_view">View details</button>
+                                    <button class="cardBtnClass" id="card_btn_book">Book Now</button>
+                                </div>
+                            </div>
+                            <% }); %>
+                    </div>
+                </div>
+
+                <% }); %>
+
+        </div>
+    </div>
+
+</body>
+
+</html>
