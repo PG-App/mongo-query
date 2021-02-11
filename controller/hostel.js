@@ -1,4 +1,5 @@
 const Hostel = require('../models/hostel');
+const City = require('../models/city');
 
 exports.create_hostel_get = (req, res) => {
     res.render('add-hostel');
@@ -72,47 +73,83 @@ exports.update_hostel_post = async (req, res) => {
 }
 
 exports.search_hostel_get = async (req, res) => {
-    const { type, bed, ac, budget_min, budget_max } = req.query;
+    const { cityName, type, bed, ac, budget_min, budget_max } = req.query;
     // console.log(req.query);
 
-    const data = await Hostel.find(
+    const cityDetails = await City.find({ cityName });
+    // console.log(cityDetails[0].cityName);
+
+    // res.send('ok');
+    await Hostel.find(
         {
-            'hostel.type': type,
-            'hostel.bed': bed,
-            'hostel.ac': ac
+            cityName: cityDetails[0]._id,
+            type: type,
+            bed: bed,
+            ac: ac
         },
         (err, hostels) => {
+            // console.log(hostels);
+            // res.send(hostels);
             res.render('results', {
-                hostels
+                hostels,
+                cities: cityDetails
             });
-        }).limit(10);
+        });
 }
 
 exports.search_hostel_post = (req, res) => {
-    // console.log(req.query.city);
-    // res.render('hostel');
-    // const data = await Hostel.find({
-    //     $or:
-    //         [{ 'hostel': { "$elemMatch": { 'hostelName': 'Bhargab PG' } } }]
-    // });
+    const { cityName } = req.body;
 
-    const {
-        cityName,
-        hostelType,
-        seaterType,
-        price,
-    } = req.body;
+    const city = { $regex: req.body.cityName, $options: 'i' };
+    const hostels = {};
 
-    // console.log(hostelType);
-
-    const data = Hostel.find({
-        'cityName': cityName,
-        'hostel.type': hostelType,
-        'hostel.seater.seaterType': seaterType,
-        'hostel.seater.price': price
-    }, (err, hostels) => {
+    const data = City.find({
+        'cityName': city
+    }, (err, cities) => {
         res.render('results', {
+            cities,
             hostels
         });
-    }).limit(10);
+    });
+}
+
+exports.add_city = async (req, res) => {
+    const { cityName } = req.body;
+
+    const newCity = new City({
+        cityName
+    });
+
+    await newCity.save();
+    res.send('City created successfully');
+}
+
+exports.add_hostel = async (req, res) => {
+    const cityID = req.params.cityID;
+    const { hostelName, type, bed, ac, price, pincode } = req.body;
+
+    const cityDetails = await City.findById(cityID);
+    // console.log(cityDetails);
+    // res.send('ok');
+
+    const newHostel = await new Hostel({
+        cityName: cityID,
+        hostelName,
+        type,
+        pincode,
+        bed,
+        ac,
+        price,
+        pincode
+    }).save();
+
+    // console.log(newHostel);
+
+    if (newHostel) {
+        cityDetails.hostel.push(newHostel);
+    }
+
+    await cityDetails.save();
+
+    res.send('Hostel created successfully');
 }

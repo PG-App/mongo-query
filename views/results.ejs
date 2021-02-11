@@ -49,12 +49,18 @@
     <div class="showAndSearch">
         <div class="showingLine">You are searching in Ganeshguri, Guwahati</div>>
         <div class="searchLocation">
-            <input type="text" list="cityList" class="inputLocation" placeholder="Search another city, locality...">
-            <datalist id="cityList">
+
+            <form class="introSearch searchLocation" method="POST" action="/api/search/hostels">
+
+                <input type="text" name="cityName" list="cityList" class="inputLocation" placeholder="Search another city, locality...">
+                <datalist id="cityList">
                 <option value="Guwahati"></option>
                 <option value="Dibrugarh"></option>
             </datalist>
-            <button class="btnSearch">Search</button>
+                <button class="btnSearch">Search</button>
+
+            </form>
+
         </div>
     </div>
 
@@ -73,6 +79,10 @@
             <form class="filterForm">
 
                 <!-- PG GENDER -->
+
+
+                <input type="hidden" name="cityName" value="<%= cities[0].cityName %>">
+
 
                 <div class="filterCategory">
                     <div class="filterCategoryHeader">Gender</div>
@@ -149,40 +159,66 @@
 
         <div class="pgContainer">
 
-            <% hostels.forEach(hostel => {  %>
 
-                <div class="pgFlex">
-                    <div class="pgCard">
-                        <% hostel.hostel.forEach(hos => { %>
-                            <img src="pg-rooms-500x500 (1).jpg" id="card_pg_image">
-                            <img src="<%= hos.feature_image %>" id="card_pg_image">
+
+            <% if(hostels.length > 0) { %>
+                <% hostels.forEach(hostel => {  %>
+
+                    <div class="pgFlex">
+                        <div class="pgCard">
+                            <!-- <img src="pg-rooms-500x500 (1).jpg" id="card_pg_image"> -->
+                            <img src="<%= hostel.feature_image %>" id="card_pg_image">
                             <div class="cardPgDetails">
                                 <!-- <p id="card_pg_name">Heujiya Kutir PG Group</p> -->
                                 <p id="card_pg_name">
-                                    <%= hos.hostelName %>
+                                    <%= hostel.hostelName %>
                                 </p>
                                 <!-- <p id="card_pg_address">Bylane No. 2, Rajgarh Road, Ganeshguri, Guwahati</p> -->
                                 <p id="card_pg_address">
                                     Bylane No. 2,
-                                    <%#= hos.street %>
+                                    <%= hostel.street %>
                                         Rajgarh Road, Ganeshguri,
-                                        <%= hos.locality %>
-                                            <%= hostel.cityName %>, PIN-
-                                                <%= hos.pincode %>
+                                        <%= hostel.locality %>
+                                            <%#= hostel.cityName %>, PIN-
+                                                <%= hostel.pincode %>
                                 </p>
                                 <!-- <p id="card_pg_gender">Boys' PG</p> -->
                                 <p id="card_pg_gender">
-                                    <%= hos.type %>' PG</p>
+                                    <%= hostel.type %>' PG</p>
                                 <div class="cardBtnGroup">
                                     <button class="cardBtnClass" id="card_btn_view">View details</button>
                                     <button class="cardBtnClass" id="card_btn_book">Book Now</button>
                                 </div>
                             </div>
-                            <% }); %>
+                        </div>
                     </div>
-                </div>
 
-                <% }); %>
+                    <%}); %>
+                        <% } %>
+
+
+
+
+
+
+
+                            <div class="pgFlex">
+                                <div class="pgCard">
+                                    <img src="pg-rooms-500x500 (1).jpg" id="card_pg_image">
+                                    <!-- <img src="" id="card_pg_image"> -->
+                                    <div class="cardPgDetails">
+                                        <p id="card_pg_name">Heujiya Kutir PG Group</p>
+                                        <p id="card_pg_address">Bylane No. 2, Rajgarh Road, Ganeshguri, Guwahati</p>
+                                        <p id="card_pg_gender">Boys' PG</p>
+                                        <div class="cardBtnGroup">
+                                            <button class="cardBtnClass" id="card_btn_view">View details</button>
+                                            <button class="cardBtnClass" id="card_btn_book">Book Now</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
 
         </div>
     </div>
