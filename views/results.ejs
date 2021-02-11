@@ -47,7 +47,13 @@
     <!-- SHOW AND SEARCH -->
 
     <div class="showAndSearch">
-        <div class="showingLine">You are searching in Ganeshguri, Guwahati</div>>
+        <div class="showingLine">You are searching in Ganeshguri, Guwahati</div>
+        <%# if(message) {%>
+            <!-- <div class="showingLine">
+                Okay -->
+            <%# message.msg %>
+    </div>
+    <%# } %>
         <div class="searchLocation">
 
             <form class="introSearch searchLocation" method="POST" action="/api/search/hostels">
@@ -62,166 +68,166 @@
             </form>
 
         </div>
-    </div>
-
-
-
-
-
-    <!-- BODY CONTAINER -->
-
-    <div class="bodyContainer">
-
-        <div class="filterContainer">
-            <div class="filterContainerHeader">Filters</div>
-            <hr>
-
-            <form class="filterForm">
-
-                <!-- PG GENDER -->
-
-
-                <input type="hidden" name="cityName" value="<%= cities[0].cityName %>">
-
-
-                <div class="filterCategory">
-                    <div class="filterCategoryHeader">Gender</div>
-                    <div class="filterCategoryChoice">
-
-                        <div class="toggleSwitch">
-                            <input type="checkbox" id="toggle_switch_type_boys" name="type" value="Boys">
-                            <label for="toggle_switch_type_boys"><p class="toggleText">Boys' PG</p></label>
-                        </div>
-
-                        <div class="toggleSwitch">
-                            <input type="checkbox" id="toggle_switch_type_girls" name="type" value="Girls">
-                            <label for="toggle_switch_type_girls"><p class="toggleText">Girls' PG</p></label>
-                        </div>
-
-                    </div>
-                </div>
-
-
-                <!-- PG BED -->
-
-                <div class="filterCategory">
-                    <div class="filterCategoryHeader">Occupancy</div>
-                    <div class="filterCategoryChoice">
-
-                        <div class="toggleSwitch">
-                            <input type="checkbox" id="toggle_switch_single_bed" name="bed" value="Single">
-                            <label for="toggle_switch_single_bed"><p class="toggleText">Single Bed</p></label>
-                        </div>
-
-                        <div class="toggleSwitch">
-                            <input type="checkbox" id="toggle_switch_double_bed" name="bed" value="Double">
-                            <label for="toggle_switch_double_bed"><p class="toggleText">Double Bed</p></label>
-                        </div>
-
-                        <div class="toggleSwitch">
-                            <input type="checkbox" id="toggle_switch_triple_bed" name="bed" value="Triple">
-                            <label for="toggle_switch_triple_bed"><p class="toggleText">Triple Bed</p></label>
-                        </div>
-
-                    </div>
-                </div>
-
-
-                <!-- AC / NON-AC -->
-
-                <div class="filterCategory">
-                    <div class="filterCategoryHeader">AC Type</div>
-                    <div class="filterCategoryChoice">
-
-                        <div class="toggleSwitch">
-                            <input type="checkbox" id="toggle_switch_ac" name="ac" value="AC">
-                            <label for="toggle_switch_ac"><p class="toggleText">AC</p></label>
-                        </div>
-
-                        <div class="toggleSwitch">
-                            <input type="checkbox" id="toggle_switch_non_ac" name="ac" value="Non-AC">
-                            <label for="toggle_switch_non_ac"><p class="toggleText">Non - AC</p></label>
-                        </div>
-
-                    </div>
-                </div>
-
-                <button type="submit" id="btn_apply_filters">Apply Filters</button>
-            </form>
         </div>
 
 
 
 
 
+        <!-- BODY CONTAINER -->
 
-        <!-- PG CONTAINER -->
+        <div class="bodyContainer">
 
-        <div class="pgContainer">
+            <div class="filterContainer">
+                <div class="filterContainerHeader">Filters</div>
+                <hr>
+
+                <form class="filterForm">
+
+                    <!-- PG GENDER -->
 
 
+                    <input type="hidden" name="cityName" value="<%= cities[0].cityName %>">
 
-            <% if(hostels.length > 0) { %>
-                <% hostels.forEach(hostel => {  %>
 
-                    <div class="pgFlex">
-                        <div class="pgCard">
-                            <!-- <img src="pg-rooms-500x500 (1).jpg" id="card_pg_image"> -->
-                            <img src="<%= hostel.feature_image %>" id="card_pg_image">
-                            <div class="cardPgDetails">
-                                <!-- <p id="card_pg_name">Heujiya Kutir PG Group</p> -->
-                                <p id="card_pg_name">
-                                    <%= hostel.hostelName %>
-                                </p>
-                                <!-- <p id="card_pg_address">Bylane No. 2, Rajgarh Road, Ganeshguri, Guwahati</p> -->
-                                <p id="card_pg_address">
-                                    Bylane No. 2,
-                                    <%= hostel.street %>
-                                        Rajgarh Road, Ganeshguri,
-                                        <%= hostel.locality %>
-                                            <%#= hostel.cityName %>, PIN-
-                                                <%= hostel.pincode %>
-                                </p>
-                                <!-- <p id="card_pg_gender">Boys' PG</p> -->
-                                <p id="card_pg_gender">
-                                    <%= hostel.type %>' PG</p>
-                                <div class="cardBtnGroup">
-                                    <button class="cardBtnClass" id="card_btn_view">View details</button>
-                                    <button class="cardBtnClass" id="card_btn_book">Book Now</button>
-                                </div>
+                    <div class="filterCategory">
+                        <div class="filterCategoryHeader">Gender</div>
+                        <div class="filterCategoryChoice">
+
+                            <div class="toggleSwitch">
+                                <input type="checkbox" id="toggle_switch_type_boys" name="type" value="Boys">
+                                <label for="toggle_switch_type_boys"><p class="toggleText">Boys' PG</p></label>
                             </div>
+
+                            <div class="toggleSwitch">
+                                <input type="checkbox" id="toggle_switch_type_girls" name="type" value="Girls">
+                                <label for="toggle_switch_type_girls"><p class="toggleText">Girls' PG</p></label>
+                            </div>
+
                         </div>
                     </div>
 
-                    <%}); %>
-                        <% } %>
+
+                    <!-- PG BED -->
+
+                    <div class="filterCategory">
+                        <div class="filterCategoryHeader">Occupancy</div>
+                        <div class="filterCategoryChoice">
+
+                            <div class="toggleSwitch">
+                                <input type="checkbox" id="toggle_switch_single_bed" name="bed" value="Single">
+                                <label for="toggle_switch_single_bed"><p class="toggleText">Single Bed</p></label>
+                            </div>
+
+                            <div class="toggleSwitch">
+                                <input type="checkbox" id="toggle_switch_double_bed" name="bed" value="Double">
+                                <label for="toggle_switch_double_bed"><p class="toggleText">Double Bed</p></label>
+                            </div>
+
+                            <div class="toggleSwitch">
+                                <input type="checkbox" id="toggle_switch_triple_bed" name="bed" value="Triple">
+                                <label for="toggle_switch_triple_bed"><p class="toggleText">Triple Bed</p></label>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <!-- AC / NON-AC -->
+
+                    <div class="filterCategory">
+                        <div class="filterCategoryHeader">AC Type</div>
+                        <div class="filterCategoryChoice">
+
+                            <div class="toggleSwitch">
+                                <input type="checkbox" id="toggle_switch_ac" name="ac" value="AC">
+                                <label for="toggle_switch_ac"><p class="toggleText">AC</p></label>
+                            </div>
+
+                            <div class="toggleSwitch">
+                                <input type="checkbox" id="toggle_switch_non_ac" name="ac" value="Non-AC">
+                                <label for="toggle_switch_non_ac"><p class="toggleText">Non - AC</p></label>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <button type="submit" id="btn_apply_filters">Apply Filters</button>
+                </form>
+            </div>
 
 
 
 
 
 
+            <!-- PG CONTAINER -->
 
-                            <div class="pgFlex">
-                                <div class="pgCard">
-                                    <img src="pg-rooms-500x500 (1).jpg" id="card_pg_image">
-                                    <!-- <img src="" id="card_pg_image"> -->
-                                    <div class="cardPgDetails">
-                                        <p id="card_pg_name">Heujiya Kutir PG Group</p>
-                                        <p id="card_pg_address">Bylane No. 2, Rajgarh Road, Ganeshguri, Guwahati</p>
-                                        <p id="card_pg_gender">Boys' PG</p>
-                                        <div class="cardBtnGroup">
-                                            <button class="cardBtnClass" id="card_btn_view">View details</button>
-                                            <button class="cardBtnClass" id="card_btn_book">Book Now</button>
-                                        </div>
+            <div class="pgContainer">
+
+
+
+                <% if(hostels.length > 0) { %>
+                    <% hostels.forEach(hostel => {  %>
+
+                        <div class="pgFlex">
+                            <div class="pgCard">
+                                <!-- <img src="pg-rooms-500x500 (1).jpg" id="card_pg_image"> -->
+                                <img src="<%= hostel.feature_image %>" id="card_pg_image">
+                                <div class="cardPgDetails">
+                                    <!-- <p id="card_pg_name">Heujiya Kutir PG Group</p> -->
+                                    <p id="card_pg_name">
+                                        <%= hostel.hostelName %>
+                                    </p>
+                                    <!-- <p id="card_pg_address">Bylane No. 2, Rajgarh Road, Ganeshguri, Guwahati</p> -->
+                                    <p id="card_pg_address">
+                                        Bylane No. 2,
+                                        <%= hostel.street %>
+                                            Rajgarh Road, Ganeshguri,
+                                            <%= hostel.locality %>
+                                                <%#= hostel.cityName %>, PIN-
+                                                    <%= hostel.pincode %>
+                                    </p>
+                                    <!-- <p id="card_pg_gender">Boys' PG</p> -->
+                                    <p id="card_pg_gender">
+                                        <%= hostel.type %>' PG</p>
+                                    <div class="cardBtnGroup">
+                                        <button class="cardBtnClass" id="card_btn_view">View details</button>
+                                        <button class="cardBtnClass" id="card_btn_book">Book Now</button>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
+                        <%}); %>
+                            <% } %>
 
 
 
+
+
+
+
+                                <div class="pgFlex">
+                                    <div class="pgCard">
+                                        <img src="pg-rooms-500x500 (1).jpg" id="card_pg_image">
+                                        <!-- <img src="" id="card_pg_image"> -->
+                                        <div class="cardPgDetails">
+                                            <p id="card_pg_name">Heujiya Kutir PG Group</p>
+                                            <p id="card_pg_address">Bylane No. 2, Rajgarh Road, Ganeshguri, Guwahati</p>
+                                            <p id="card_pg_gender">Boys' PG</p>
+                                            <div class="cardBtnGroup">
+                                                <button class="cardBtnClass" id="card_btn_view">View details</button>
+                                                <button class="cardBtnClass" id="card_btn_book">Book Now</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+            </div>
         </div>
-    </div>
 
 </body>
 

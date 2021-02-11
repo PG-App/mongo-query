@@ -17,8 +17,8 @@ router.get('/add/hostels', create_hostel_get);
 router.post('/update/hostels/:id', update_hostel_post);
 router.get('/get/hostels/:id', get_hostel_by_id);
 
-router.get('/search/hostels', search_hostel_get);
 router.post('/search/hostels', search_hostel_post);
+router.get('/search/hostels', search_hostel_get);
 
 router.post('/add/city', add_city);
 router.post('/add/hostel/:cityID', add_hostel);

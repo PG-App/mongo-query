@@ -1,9 +1,19 @@
 const dotenv = require('dotenv');
 dotenv.config();
 const express = require('express');
+const session = require('express-session');
+const flash = require('connect-flash');
 const mongoose = require('mongoose');
 
 const app = express();
+
+app.use(session({
+    secret: 'bhargab',
+    saveUninitialized: true,
+    resave: true
+}));
+
+app.use(flash());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

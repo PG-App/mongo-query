@@ -6,10 +6,9 @@ exports.create_hostel_get = (req, res) => {
 }
 
 exports.get_all_hostels = async (req, res) => {
-    await Hostel.find().exec((err, hostels) => {
-        // console.log(hostels);
-        res.json(hostels);
-    });
+    const hostels = await Hostel.find();
+    console.log(hostels);
+    res.json(hostels);
 }
 
 exports.create_hostel_post = (req, res) => {
@@ -74,42 +73,81 @@ exports.update_hostel_post = async (req, res) => {
 
 exports.search_hostel_get = async (req, res) => {
     const { cityName, type, bed, ac, budget_min, budget_max } = req.query;
-    // console.log(req.query);
 
     const cityDetails = await City.find({ cityName });
-    // console.log(cityDetails[0].cityName);
 
-    // res.send('ok');
-    await Hostel.find(
-        {
+    let filterParam = {};
+
+    if (type !== undefined && bed !== undefined && ac !== undefined) {
+        filterParam = {
             cityName: cityDetails[0]._id,
-            type: type,
-            bed: bed,
-            ac: ac
-        },
-        (err, hostels) => {
-            // console.log(hostels);
-            // res.send(hostels);
-            res.render('results', {
-                hostels,
-                cities: cityDetails
-            });
-        });
+            type,
+            bed,
+            ac
+        }
+    }
+    else if (type !== undefined && bed === undefined && ac === undefined) {
+        filterParam = {
+            cityName: cityDetails[0]._id,
+            type
+        }
+    }
+    else if (type === undefined && bed !== undefined && ac === undefined) {
+        filterParam = {
+            cityName: cityDetails[0]._id,
+            bed
+        }
+    }
+    else if (type === undefined && bed === undefined && ac !== undefined) {
+        filterParam = {
+            cityName: cityDetails[0]._id,
+            ac
+        }
+    }
+    else if (type !== undefined && bed !== undefined && ac === undefined) {
+        filterParam = {
+            cityName: cityDetails[0]._id,
+            type,
+            bed
+        }
+    }
+    else if (type !== undefined && bed === undefined && ac !== undefined) {
+        filterParam = {
+            cityName: cityDetails[0]._id,
+            type,
+            ac
+        }
+    }
+    else if (type === undefined && bed !== undefined && ac !== undefined) {
+        filterParam = {
+            cityName: cityDetails[0]._id,
+            bed,
+            ac
+        }
+    }
+    else if (type === undefined && bed === undefined && ac === undefined) {
+        filterParam = {
+            cityName: cityDetails[0]._id
+        }
+    }
+
+    const hostels = await Hostel.find(filterParam);
+    res.render('results', {
+        hostels,
+        cities: cityDetails
+    });
 }
 
-exports.search_hostel_post = (req, res) => {
+exports.search_hostel_post = async (req, res) => {
     const { cityName } = req.body;
 
     const city = { $regex: req.body.cityName, $options: 'i' };
-    const hostels = {};
 
-    const data = City.find({
-        'cityName': city
-    }, (err, cities) => {
-        res.render('results', {
-            cities,
-            hostels
-        });
+    const cities = await City.find({ 'cityName': city }).populate('hostel');
+    
+    res.render('results', {
+        cities,
+        hostels: cities[0].hostel
     });
 }
 
