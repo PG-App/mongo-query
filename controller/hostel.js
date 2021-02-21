@@ -77,6 +77,8 @@ exports.search_hostel_get = async (req, res) => {
     const { cityName, type, bed, ac, budget_min, budget_max } = req.query;
     const cityDetails = await City.find({ cityName });
 
+    console.log(req.query);
+
     let filterParam = {};
 
     if (type !== undefined && bed !== undefined && ac !== undefined) {
@@ -89,7 +91,8 @@ exports.search_hostel_get = async (req, res) => {
     }
     else if (type !== undefined && bed === undefined && ac === undefined) {
         filterParam = {
-            cityName: cityDetails[0]._id,
+            // cityName: cityDetails[0]._id,
+            cityName,
             type
         }
     }
@@ -128,17 +131,19 @@ exports.search_hostel_get = async (req, res) => {
     }
     else if (type === undefined && bed === undefined && ac === undefined) {
         filterParam = {
-            cityName: cityDetails[0]._id
+            // cityName: cityDetails[0]._id
+            cityName
         }
     }
 
-    const hostels = await Hostel.find(filterParam);
-    res.render('results', {
-        msg: `We have got ${hostels.length} hostels suitable for you!`,
-        message: '',
-        hostels,
-        cities: cityDetails
-    });
+    // const hostels = await Hostel.find(filterParam);
+    res.json({ cities: cityDetails });
+    // res.render('results', {
+    //     // msg: `We have got ${hostels.length} hostels suitable for you!`,
+    //     // message: '',
+    //     hostels,
+    //     cities: cityDetails
+    // });
 }
 
 exports.search_hostel_post = async (req, res) => {

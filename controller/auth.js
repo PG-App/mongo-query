@@ -1,14 +1,6 @@
-const nodemailer = require('nodemailer');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
-
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: 'nestpg244@gmail.com',
-        pass: process.env.MAIL_PASSWORD
-    }
-});
+const client = require('twilio')('AC837e10f1ca098b6803ac55762c111197', '3228d2d63a39224dd855d8a2760dbddd');
 
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = role => {
@@ -17,90 +9,67 @@ const createToken = role => {
     });
 };
 
-module.exports.signup_post = (req, res) => {
-    const { name, email, password } = req.body;
-    // console.log(req.body);
-
-    const fullUrl = req.protocol + '://' + req.get('host');
-    // + req.originalUrl;
-    console.log(fullUrl);
-
-    User.findOne({ email }).exec((err, user) => {
-        if (user) {
-            return res.status(400).json({
-                error: 'This email id is already registered!!!'
-            });
-        }
-
-        const token = jwt.sign({ name, email, password }, 'secret', { expiresIn: '10m' });
-        console.log(token);
-
-        const mailOptions = {
-            from: 'ssnbhelp@protonmail.com',
-            to: email,
-            subject: 'Account activation link',
-            html:
-                // `<h3>Please <a href="http://localhost:5000/api/authentication/activate/${token}">click</a> here to activate your account.
-                //         `
-                `<h3>Please <a href="${fullUrl}/api/authentication/activate/${token}">click</a> here to activate your account.
-                        `
-        };
-
-        transporter.sendMail(mailOptions, function (error, info) {
-            if (error) {
-                console.log(error);
-                res.json({ error: 'Oops! Some error occured on sending the mail!' });
-            } else {
-                console.log('Email sent: ' + info.response);
-                res.json({ message: 'Please check your email to verify your account!' });
-            }
+exports.phone_login = async (req, res) => {
+    try {
+        console.log(req.body);
+        const data = await client.verify.services('VA3c52b95816d50423533e0be1e3f4c20d').verifications.create({
+            to: `+91${req.body.phone}`,
+            channel: 'sms'
         });
-    });
-}
 
-module.exports.activateAccount = (req, res) => {
-    const token = req.params.token;
+        if (data.status === 'pending') {
+            res.json({ success: 'Please check your inbox for OTP!' });
+        } else {
+            return res.json({ error: 'Sorry! Please input a valid phone number!' });
+        }
+    } catch (err) {
+        return res.json({ error: 'Some error occured!!!' });
+    }
+};
 
-    if (token) {
-        jwt.verify(token, 'secret', (err, decodedToken) => {
-            if (err) {
-                console.log(err);
-                res.redirect('/api/signup');
+exports.verifyOTP = async (req, res) => {
+    try {
+        const { phone, code } = req.body;
+        const data = await client.verify.services('VA3c52b95816d50423533e0be1e3f4c20d').verificationChecks.create({
+            to: `+91${phone}`,
+            code
+        });
+
+        if (data.status === 'approved') {
+
+            const user = await User.findOne({ phone });
+
+            if (user) {
+
+                const token = await createToken(user);
+                // console.log(token);
+                res.cookie('pg-app', token, { httpOnly: true, maxAge: maxAge * 1000 });
+
+                return res.status(400).json({
+                    error: 'This phone is already registered!'
+                });
             } else {
-                console.log(decodedToken);
-                const { name, email, password } = decodedToken;
-                const user = new User({ name, email, password });
-                user.save((err, user) => {
-                    if (err) {
-                        console.log(err);
-                        return res.json(err);
-                    }
-                    console.log(user);
-                    return res.json(user);
+                const newUser = new User({ phone });
+                await newUser.save();
+
+                const token = await createToken(newUser);
+                // console.log(token);
+                res.cookie('pg-app', token, { httpOnly: true, maxAge: maxAge * 1000 });
+
+                return res.json({
+                    success: 'User authenticated successfully!'
                 });
             }
-        });
-    } else {
-        res.redirect('/api/signup');
-    }
-}
-
-module.exports.signin_post = async (req, res) => {
-    const { email, password } = req.body;
-
-    try {
-        const user = await User.signin(email, password);
-        console.log(user);
-        const token = createToken(user.role);
-        console.log(token);
-        res.cookie('pg-app', token, { httpOnly: true, maxAge: maxAge * 1000 });
-        return res.status(200).json({ token, user: user });
-    }
-    catch (err) {
+        } else {
+            return res.json({
+                error: 'Please input the correct OTP!'
+            });
+        }
+    } catch (err) {
         console.log(err);
-        res.status(400).json({ error: err });
+        return res.json({ error: 'Some error occured!' });
     }
-}
+};
 
 exports.signout = (req, res) => {
     res.clearCookie('t');

@@ -20,14 +20,31 @@
 #     "cityName": "Ahmedabad"
 # }
 
-POST  http://localhost:5000/api/add/hostel/6031245068a86842f86af347
+# POST  http://localhost:5000/api/add/hostel/6031245068a86842f86af347
+# Content-Type: application/json
+
+# {
+#     "hostelName": "Abhimanyu PG",
+#     "type": "Girls",
+#     "bed": "Triple",
+#     "ac":"Non-AC",
+#     "price": 5000,
+#     "pincode": 788101
+# }
+
+
+# USER SIGN IN
+#  POST  http://localhost:5000/api/signin
+# Content-Type: application/json
+
+# {
+#     "phone": "9365698129"
+# }
+
+ POST  http://localhost:5000/api/verifyOTP
 Content-Type: application/json
 
 {
-    "hostelName": "Abhimanyu PG",
-    "type": "Girls",
-    "bed": "Triple",
-    "ac":"Non-AC",
-    "price": 5000,
-    "pincode": 788101
+    "phone": "9365698129",
+    "code": "544144"
 }

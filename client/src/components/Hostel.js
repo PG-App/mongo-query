@@ -9,10 +9,22 @@ const Hostel = ({ location: { state } }) => {
     const success = state.values.success;
 
     useEffect(() => {
-        if (success) {
-            setMessage(`${hostels[0].length} hostels found!`);
-        }
+        // if (success) {
+        setMessage(`${hostels[0].length} hostels found!`);
+        // }
     }, []);
+
+    const genderChange = e => {
+        const checked = e.target.checked;
+        const checkedValue = e.target.value;
+        const checkedName = e.target.name;
+
+        console.log(
+            checked,
+            checkedValue,
+            checkedName
+        );
+    }
 
     return (
         <Fragment>
@@ -45,7 +57,13 @@ const Hostel = ({ location: { state } }) => {
                                 <div className="filterCategoryChoice">
 
                                     <div className="toggleSwitch">
-                                        <input type="checkbox" id="toggle_switch_type_boys" name="type" value="Boys" />
+                                        <input
+                                            type="checkbox"
+                                            id="toggle_switch_type_boys"
+                                            name="type"
+                                            value="Boys"
+                                            onChange={genderChange}
+                                        />
                                         <label for="toggle_switch_type_boys"><p className="toggleText">Boys' PG</p></label>
                                     </div>
 
