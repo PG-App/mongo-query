@@ -3,7 +3,7 @@
 # Content-Type: application/json
 
 # {
-#     "cityName": "Barpeta",
+#     "cityName": "Dibrugarh",
 #     "feature_image": "https://firebasestorage.googleapis.com/v0/b/fb-express-d6a56.appspot.com/o/images%2Fme.jpg?alt=media&token=2337c3ea-6a1f-4564-8799-bb94f284657a"
 # }
 
@@ -13,21 +13,21 @@
 # x-rapidapi-host:andruxnet-world-cities-v1.p.rapidapi.com
 # useQueryString: true
 
-# POST  http://localhost:3000/api/add/city
+# POST  http://localhost:5000/api/add/city
 # Content-Type: application/json
 
 # {
-#     "cityName": "Guwahati"
+#     "cityName": "Ahmedabad"
 # }
 
-POST  http://localhost:3000/api/add/hostel/60255a2b9c7cb655ac4fb654
+POST  http://localhost:5000/api/add/hostel/6031245068a86842f86af347
 Content-Type: application/json
 
 {
-    "hostelName": "Manab PG",
+    "hostelName": "Abhimanyu PG",
     "type": "Girls",
-    "bed": "Single",
-    "ac":"AC",
+    "bed": "Triple",
+    "ac":"Non-AC",
     "price": 5000,
-    "pincode": 781325
+    "pincode": 788101
 }

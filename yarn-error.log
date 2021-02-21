@@ -1,0 +1,64 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\Bhargab Nath\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add react-flash-message
+
+PATH: 
+  C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Bhargab Nath\bin;C:\Program Files\nodejs;C:\Program Files\nodejs;C:\Program Files\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin;C:\Windows\System32;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Python 3.8;C:\Users\Bhargab Nath\Python38;C:\Users\Bhargab Nath\Python38\Scripts;C:\Users\Bhargab Nath\Downloads\Redis-x64-3.0.504;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\MongoDB\Server\4.4\bin;C:\Program Files\nodejs;C:\Users\Bhargab Nath\AppData\Roaming\npm;C:\Program Files\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin;C:\Windows\System32;C:\Users\Bhargab Nath\AppData\Local\Microsoft\WindowsApps;C:\Users\Bhargab Nath\Python38\Scripts;C:\Users\Bhargab Nath\Python38;C:\Users\Bhargab Nath\Downloads\Redis-x64-3.0.504;C:\Users\Bhargab Nath\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\MongoDB\Server\4.4\bin
+
+Yarn version: 
+  1.22.5
+
+Node version: 
+  14.15.1
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: EPERM: operation not permitted, unlink 'C:\Users\Bhargab Nath\Desktop\nodejs_programs\hostel-model\node_modules\bcrypt\lib\binding\napi-v3\bcrypt_lib.node'
+
+npm manifest: 
+  {
+      "name": "jwt-authentication-tutorial",
+      "version": "1.0.0",
+      "description": "",
+      "main": "server.js",
+      "scripts": {
+          "test": "echo \"Error: no test specified\" && exit 1",
+          "start": "node server.js",
+          "server": "nodemon server.js",
+          "client": "npm start --prefix client",
+          "dev": "concurrently \"npm run server\" \"npm run client\""
+      },
+      "keywords": [],
+      "author": "",
+      "license": "ISC",
+      "dependencies": {
+          "@lottiefiles/react-lottie-player": "^3.0.1",
+          "axios": "^0.21.1",
+          "bcrypt": "^5.0.0",
+          "concurrently": "^5.3.0",
+          "connect-flash": "^0.1.1",
+          "cookie-parser": "^1.4.5",
+          "cors": "^2.8.5",
+          "dotenv": "^8.2.0",
+          "ejs": "^3.1.5",
+          "express": "^4.17.1",
+          "express-session": "^1.17.1",
+          "formidable": "^1.2.2",
+          "jsonwebtoken": "^8.5.1",
+          "mailgun-js": "^0.22.0",
+          "mongodb": "^3.6.3",
+          "mongoose": "^5.10.14",
+          "node-fetch": "^2.6.1",
+          "node-popup": "^0.1.14",
+          "nodemailer": "^6.4.16",
+          "unirest": "^0.6.0",
+          "webpage": "^0.3.0"
+      }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

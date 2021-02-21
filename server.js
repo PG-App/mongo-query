@@ -1,28 +1,17 @@
 const dotenv = require('dotenv');
 dotenv.config();
 const express = require('express');
-const session = require('express-session');
-const flash = require('connect-flash');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const app = express();
 
-app.use(session({
-    secret: 'bhargab',
-    saveUninitialized: true,
-    resave: true
-}));
-
-app.use(flash());
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
-app.use(express.static('public'));
-
-app.set('view engine', 'ejs');
+app.use(cors());
 
 const hostelRoutes = require('./routes/hostel');
+const auth = require('./routes/auth');
 
 const dbURI = 'mongodb://localhost/pg-app';
 
@@ -36,7 +25,8 @@ mongoose.connect(dbURI, {
     .catch((err) => console.log(err));
 
 app.use('/api', hostelRoutes);
+app.use('/api', auth);
 
-const PORT = process.env.PORT | 3000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}...`));

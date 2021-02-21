@@ -1,6 +1,8 @@
 const Hostel = require('../models/hostel');
 const City = require('../models/city');
 
+const ObjectId = require('mongodb').ObjectID;
+
 exports.create_hostel_get = (req, res) => {
     res.render('add-hostel');
 }
@@ -73,7 +75,6 @@ exports.update_hostel_post = async (req, res) => {
 
 exports.search_hostel_get = async (req, res) => {
     const { cityName, type, bed, ac, budget_min, budget_max } = req.query;
-
     const cityDetails = await City.find({ cityName });
 
     let filterParam = {};
@@ -133,6 +134,8 @@ exports.search_hostel_get = async (req, res) => {
 
     const hostels = await Hostel.find(filterParam);
     res.render('results', {
+        msg: `We have got ${hostels.length} hostels suitable for you!`,
+        message: '',
         hostels,
         cities: cityDetails
     });
@@ -144,8 +147,10 @@ exports.search_hostel_post = async (req, res) => {
     const city = { $regex: req.body.cityName, $options: 'i' };
 
     const cities = await City.find({ 'cityName': city }).populate('hostel');
-    
+
     res.render('results', {
+        message: `Fetched ${cities[0].hostel.length} hostels`,
+        msg: '',
         cities,
         hostels: cities[0].hostel
     });
@@ -190,4 +195,38 @@ exports.add_hostel = async (req, res) => {
     await cityDetails.save();
 
     res.send('Hostel created successfully');
+}
+
+exports.searchHostelByCity = async (req, res) => {
+    try {
+        const { cityName } = req.query;
+
+        const city = { $regex: cityName, $options: 'i' };
+
+        const hostels = await City.find({ 'cityName': city });
+
+        const h = await hostels[0].hostel;
+        const oids = [];
+
+
+        h.forEach(function (item) {
+            oids.push(new ObjectId(item));
+        });
+
+        const hostelsByCity = await Hostel.find({ _id: { $in: oids } });
+
+        res.json({
+            hostels,
+            cities: hostelsByCity
+        });
+    } catch (error) {
+        return res.json({ error });
+    }
+}
+
+exports.getHostelById = async (req, res) => {
+    const { id } = req.params;
+    const hostel = await Hostel.findById(id);
+    //    const data = hostel.json();
+    return res.json(hostel);
 }
