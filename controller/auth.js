@@ -1,10 +1,10 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
-const client = require('twilio')('AC837e10f1ca098b6803ac55762c111197', '3228d2d63a39224dd855d8a2760dbddd');
+const client = require('twilio')(process.env.ACCOUNT_SID, process.env.AUTH_TOKEN);
 
 const maxAge = 3 * 24 * 60 * 60;
-const createToken = role => {
-    return jwt.sign({ role }, 'secret', {
+const createToken = user => {
+    return jwt.sign({ user }, process.env.JWT_SECRET, {
         expiresIn: maxAge
     });
 };
@@ -30,7 +30,7 @@ exports.phone_login = async (req, res) => {
 exports.verifyOTP = async (req, res) => {
     try {
         const { phone, code } = req.body;
-        const data = await client.verify.services('VA3c52b95816d50423533e0be1e3f4c20d').verificationChecks.create({
+        const data = await client.verify.services(process.env.AUTH_SERVICE_ID).verificationChecks.create({
             to: `+91${phone}`,
             code
         });
