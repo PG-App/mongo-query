@@ -23,14 +23,15 @@ exports.phone_login = async (req, res) => {
             return res.json({ error: 'Sorry! Please input a valid phone number!' });
         }
     } catch (err) {
-        return res.json({ error: 'Some error occured!!!' });
+        return res.json({ error: 'Some error occured!!!', err });
     }
 };
 
 exports.verifyOTP = async (req, res) => {
     try {
-        const { phone, code } = req.body;
-        const data = await client.verify.services(process.env.AUTH_SERVICE_ID).verificationChecks.create({
+        const { phone, code, username } = req.body;
+        console.log(req.body);
+        const data = await client.verify.services('VA3c52b95816d50423533e0be1e3f4c20d').verificationChecks.create({
             to: `+91${phone}`,
             code
         });
@@ -40,23 +41,23 @@ exports.verifyOTP = async (req, res) => {
             const user = await User.findOne({ phone });
 
             if (user) {
-
                 const token = await createToken(user);
-                // console.log(token);
-                res.cookie('pg-app', token, { httpOnly: true, maxAge: maxAge * 1000 });
+
+                res.cookie('NEST', token, { httpOnly: true, maxAge: maxAge * 1000 });
 
                 return res.status(400).json({
+                    user,
                     error: 'This phone is already registered!'
                 });
             } else {
-                const newUser = new User({ phone });
+                const newUser = new User({ phone, username });
                 await newUser.save();
 
                 const token = await createToken(newUser);
-                // console.log(token);
-                res.cookie('pg-app', token, { httpOnly: true, maxAge: maxAge * 1000 });
+                res.cookie('NEST', token, { httpOnly: true, maxAge: maxAge * 1000 });
 
                 return res.json({
+                    user: newUser,
                     success: 'User authenticated successfully!'
                 });
             }
