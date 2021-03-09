@@ -4,6 +4,8 @@ import queryString from 'query-string';
 const Search = (props) => {
     const [hostels, setHostels] = useState([]);
     const [type, setType] = useState('');
+    const [occupancy, setOccupancy] = useState('');
+    const [ac, setAc] = useState('');
 
     const queriedCity = props.location.search;
     const params = queryString.parse(queriedCity);
@@ -37,6 +39,49 @@ const Search = (props) => {
         })
     }
 
+    const handleChangeAC = e => {
+        console.log(e.target.value);
+        setAc(e.target.value);
+    }
+
+    const getHostelByOccupancy = (occupancy) => {
+        const fetchableData = {
+            bed: occupancy,
+            cityName: params.cityName
+        }
+        return fetch(`http://localhost:5000/api/hostels/search${queriedCity}`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(fetchableData)
+        }).then(res => {
+            return res.json();
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
+    const getHostelByAC = (ac) => {
+        const fetchableData = {
+            ac,
+            cityName: params.cityName
+        }
+        return fetch(`http://localhost:5000/api/hostels/search${queriedCity}`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(fetchableData)
+        }).then(res => {
+            return res.json();
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
     useEffect(() => {
         getHostelsByCityName().then(data => {
             setHostels(data.hostels[0].hostel);
@@ -44,11 +89,26 @@ const Search = (props) => {
 
         getHostelByType(type).then(data => {
             setHostels(data.hostels);
-        })
-    }, [type]);
+        });
+
+        getHostelByOccupancy(occupancy).then(data => {
+            console.log(data);
+            setHostels(data.hostels);
+        });
+
+        getHostelByAC(ac).then(data => {
+            console.log(data);
+            setHostels(data.hostels);
+        });
+    }, [type, occupancy, ac]);
 
     const handleChangeType = e => {
         setType(e.target.value);
+    }
+
+    const handleOccupancy = e => {
+        console.log(e.target.value);
+        setOccupancy(e.target.value);
     }
 
     return (
@@ -60,14 +120,6 @@ const Search = (props) => {
             </p>
 
             {/* GENDER */}
-
-            <input
-                type="hidden"
-                // value={city}
-                name='cityName'
-                value={params.cityName}
-            // onChange={e => setValues({ ...values })}
-            />
 
             <div class="filterCategory">
                 <div class="filterCategoryHeader">Gender</div>
@@ -99,22 +151,22 @@ const Search = (props) => {
 
                     <div class="toggleSwitch">
                         <input
-                            // onChange={handleOccupancy}
-                            type="checkbox" id="toggle_switch_single_bed" name="bed" value="Single" />
+                            onChange={handleOccupancy}
+                            type="radio" id="toggle_switch_single_bed" name="bed" value="Single" />
                         <label for="toggle_switch_single_bed"><p class="toggleText">Single Bed</p></label>
                     </div>
 
                     <div class="toggleSwitch">
                         <input
-                            // onChange={handleOccupancy}
-                            type="checkbox" id="toggle_switch_double_bed" name="bed" value="Double" />
+                            onChange={handleOccupancy}
+                            type="radio" id="toggle_switch_double_bed" name="bed" value="Double" />
                         <label for="toggle_switch_double_bed"><p class="toggleText">Double Bed</p></label>
                     </div>
 
                     <div class="toggleSwitch">
                         <input
-                            // onChange={handleOccupancy}
-                            type="checkbox" id="toggle_switch_triple_bed" name="bed" value="Triple" />
+                            onChange={handleOccupancy}
+                            type="radio" id="toggle_switch_triple_bed" name="bed" value="Triple" />
                         <label for="toggle_switch_triple_bed"><p class="toggleText">Triple Bed</p></label>
                     </div>
 
@@ -130,14 +182,14 @@ const Search = (props) => {
 
                     <div class="toggleSwitch">
                         <input
-                            // onChange={handleChange}
+                            onChange={handleChangeAC}
                             type="radio" id="toggle_switch_ac" name="ac" value="AC" />
                         <label for="toggle_switch_ac"><p class="toggleText">AC</p></label>
                     </div>
 
                     <div class="toggleSwitch">
                         <input
-                            // onChange={handleChange}
+                            onChange={handleChangeAC}
                             type="radio" id="toggle_switch_non_ac" name="ac" value="Non-AC" />
                         <label for="toggle_switch_non_ac"><p class="toggleText">Non - AC</p></label>
                     </div>
