@@ -33,15 +33,11 @@ const Search = (props) => {
             },
             body: JSON.stringify(fetchableData)
         }).then(res => {
+            console.log(fetchableData);
             return res.json();
         }).catch(err => {
             console.log(err);
         })
-    }
-
-    const handleChangeAC = e => {
-        console.log(e.target.value);
-        setAc(e.target.value);
     }
 
     const getHostelByOccupancy = (occupancy) => {
@@ -86,21 +82,27 @@ const Search = (props) => {
         getHostelsByCityName().then(data => {
             setHostels(data.hostels[0].hostel);
         });
+    }, []);
 
+    useEffect(() => {
         getHostelByType(type).then(data => {
             setHostels(data.hostels);
         });
+    }, [type]);
 
-        getHostelByOccupancy(occupancy).then(data => {
+    useEffect(() => {
+       getHostelByOccupancy(occupancy).then(data => {
             console.log(data);
             setHostels(data.hostels);
         });
+    }, [occupancy]);
 
+    useEffect(() => {
         getHostelByAC(ac).then(data => {
             console.log(data);
             setHostels(data.hostels);
         });
-    }, [type, occupancy, ac]);
+    }, [ac]);
 
     const handleChangeType = e => {
         setType(e.target.value);
@@ -109,6 +111,11 @@ const Search = (props) => {
     const handleOccupancy = e => {
         console.log(e.target.value);
         setOccupancy(e.target.value);
+    }
+
+    const handleChangeAC = e => {
+        console.log(e.target.value);
+        setAc(e.target.value);
     }
 
     return (

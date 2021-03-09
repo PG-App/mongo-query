@@ -189,7 +189,7 @@ exports.applyFilter = async (req, res) => {
 
     const hostels = await Hostel.find(filter);
 
-    console.log(filter);
+    // console.log(hostels);
 
     res.json({
         size: hostels.length,
