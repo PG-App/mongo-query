@@ -189,9 +189,10 @@ exports.applyFilter = async (req, res) => {
 
     const hostels = await Hostel.find(filter);
 
-    // console.log(hostels);
+    console.log(cityDetails[0].cityName);
 
     res.json({
+        city: cityDetails[0].cityName,
         size: hostels.length,
         // cities: cityDetails,
         hostels: hostels

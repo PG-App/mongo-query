@@ -3,6 +3,7 @@ import queryString from 'query-string';
 
 const Search = (props) => {
     const [hostels, setHostels] = useState([]);
+    const [cityname, setCityname] = useState('')
     const [type, setType] = useState('');
     const [occupancy, setOccupancy] = useState('');
     const [ac, setAc] = useState('');
@@ -33,7 +34,6 @@ const Search = (props) => {
             },
             body: JSON.stringify(fetchableData)
         }).then(res => {
-            console.log(fetchableData);
             return res.json();
         }).catch(err => {
             console.log(err);
@@ -80,7 +80,9 @@ const Search = (props) => {
 
     useEffect(() => {
         getHostelsByCityName().then(data => {
+            console.log(data);
             setHostels(data.hostels[0].hostel);
+            setCityname(data.hostels[0].cityName);
         });
     }, []);
 
@@ -121,7 +123,7 @@ const Search = (props) => {
     return (
         <Fragment>
 
-            <h2>{params.cityName}</h2>
+            <h2>{cityname}</h2>
             <p>
                 {JSON.stringify(hostels)}
             </p>
